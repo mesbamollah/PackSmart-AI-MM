@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "PackSmart AI"
+description = "A decision-support platform for farmers, food processors, startups, and researchers to evaluate food packaging materials from commodity properties, storage, transport, shelf-life, cost, and sustainability requirements."
+version = "1.0.0"
+id = "artifacts/packsmart-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23367
+
+[services.development]
+run = "pnpm --filter @workspace/packsmart-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/packsmart-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/packsmart-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23367"
+BASE_PATH = "/"

@@ -3,20 +3,26 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: PackSmart AI decision-support API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: materials
+  - name: commodities
+  - name: recommendations
+  - name: profile
+  - name: dashboard
+security:
+  - clerkSession: []
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
+      security: []
       responses:
         "200":
           description: Healthy
@@ -24,13 +30,559 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /commodities:
+    get:
+      operationId: listCommodities
+      tags: [commodities]
+      summary: List starter commodities
+      security: []
+      responses:
+        "200":
+          description: Commodities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Commodity"
+  /materials:
+    get:
+      operationId: listMaterials
+      tags: [materials]
+      summary: Search packaging materials
+      security: []
+      parameters:
+        - name: search
+          in: query
+          schema: { type: string }
+        - name: category
+          in: query
+          schema: { type: string }
+        - name: sustainability
+          in: query
+          schema: { type: string }
+        - name: cost
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: Materials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MaterialSummary"
+  /materials/{id}:
+    get:
+      operationId: getMaterial
+      tags: [materials]
+      summary: Get a material reference record
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/MaterialId"
+      responses:
+        "200":
+          description: Material
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Material"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get the signed-in user's profile
+      responses:
+        "200":
+          description: Profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    patch:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Update the signed-in user's profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileInput"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary for the signed-in user
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /recommendations/analyze:
+    post:
+      operationId: analyzeRecommendation
+      tags: [recommendations]
+      summary: Analyze packaging requirements
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecommendationInput"
+      responses:
+        "200":
+          description: Generated recommendation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecommendationResult"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /recommendations:
+    get:
+      operationId: listRecommendations
+      tags: [recommendations]
+      summary: List the signed-in user's recommendations
+      parameters:
+        - name: search
+          in: query
+          schema: { type: string }
+        - name: commodity
+          in: query
+          schema: { type: string }
+        - name: storageType
+          in: query
+          schema: { type: string }
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [newest, oldest, shelfLife]
+      responses:
+        "200":
+          description: Recommendations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecommendationSummary"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+      operationId: saveRecommendation
+      tags: [recommendations]
+      summary: Save an analyzed recommendation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecommendationSaveInput"
+      responses:
+        "201":
+          description: Saved recommendation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recommendation"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /recommendations/{id}:
+    get:
+      operationId: getRecommendation
+      tags: [recommendations]
+      summary: Get a saved recommendation
+      parameters:
+        - $ref: "#/components/parameters/RecommendationId"
+      responses:
+        "200":
+          description: Recommendation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recommendation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /recommendations/{id}/share:
+    post:
+      operationId: createRecommendationShare
+      tags: [recommendations]
+      summary: Create a public share link for a saved recommendation
+      parameters:
+        - $ref: "#/components/parameters/RecommendationId"
+      responses:
+        "200":
+          description: Public share information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicShare"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /recommendations/public/{shareId}:
+    get:
+      operationId: getPublicRecommendation
+      tags: [recommendations]
+      summary: Get a public recommendation summary
+      security: []
+      parameters:
+        - name: shareId
+          in: path
+          required: true
+          schema: { type: string, minLength: 8 }
+      responses:
+        "200":
+          description: Public recommendation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicRecommendation"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
+  securitySchemes:
+    clerkSession:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    MaterialId:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, minLength: 1 }
+    RecommendationId:
+      name: id
+      in: path
+      required: true
+      schema: { type: integer, minimum: 1 }
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
   schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
     HealthStatus:
       type: object
+      required: [status]
       properties:
-        status:
+        status: { type: string }
+    Profile:
+      type: object
+      required: [id, name, email, userType]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        email: { type: string, format: email }
+        userType:
           type: string
-      required:
-        - status
-
+          enum: [farmer, processor, manufacturer, startup, researcher, student, other]
+        createdAt: { type: string, format: date-time }
+    ProfileInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 2 }
+        userType:
+          type: string
+          enum: [farmer, processor, manufacturer, startup, researcher, student, other]
+    Commodity:
+      type: object
+      required: [id, name, category, respirationClass, oxygenSensitivity, moistureSensitivity]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        moistureRange: { type: string }
+        typicalPhRange: { type: string }
+        respirationClass: { type: string, enum: [low, medium, high, very-high] }
+        oxygenSensitivity: { type: string, enum: [low, medium, high] }
+        moistureSensitivity: { type: string, enum: [low, medium, high] }
+    MaterialSummary:
+      type: object
+      required: [id, name, category, barrierSummary, sustainability, cost]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        polymerFamily: { type: string }
+        barrierSummary: { type: string }
+        sustainability: { type: string }
+        cost: { type: string, enum: [low, medium, high] }
+        mapSuitability: { type: string, enum: [recommended, conditional, not-recommended] }
+    Material:
+      allOf:
+        - $ref: "#/components/schemas/MaterialSummary"
+        - type: object
+          required: [properties, applications, advantages, limitations, compatibilityNotes, thicknessRange]
+          properties:
+            properties:
+              type: object
+              required: [moistureBarrier, oxygenBarrier, lightBarrier, sealability, mechanicalStrength]
+              properties:
+                moistureBarrier: { type: string }
+                oxygenBarrier: { type: string }
+                lightBarrier: { type: string }
+                gasPermeability: { type: string }
+                sealability: { type: string }
+                mechanicalStrength: { type: string }
+                temperatureSuitability: { type: string }
+            applications:
+              type: array
+              items: { type: string }
+            advantages:
+              type: array
+              items: { type: string }
+            limitations:
+              type: array
+              items: { type: string }
+            compatibilityNotes:
+              type: array
+              items: { type: string }
+            thicknessRange: { type: string }
+            recyclability: { type: string }
+            biodegradability: { type: string }
+            compostability: { type: string }
+    RecommendationInput:
+      type: object
+      required: [commodityName, category, properties, storage, transportation, preferences]
+      properties:
+        commodityName: { type: string, minLength: 1 }
+        category: { type: string, minLength: 1 }
+        properties:
+          type: object
+          required: [moistureContent, oilContent, ph, respirationRate, oxygenSensitivity, lightSensitivity, microbialSensitivity, textureSensitivity]
+          properties:
+            moistureContent: { type: number, minimum: 0, maximum: 100 }
+            oilContent: { type: number, minimum: 0, maximum: 100 }
+            ph: { type: number, minimum: 0, maximum: 14 }
+            respirationRate: { type: string, enum: [low, medium, high, very-high] }
+            respirationNumeric: { type: number, minimum: 0 }
+            oxygenSensitivity: { type: string, enum: [low, medium, high] }
+            lightSensitivity: { type: string, enum: [low, medium, high] }
+            microbialSensitivity: { type: string, enum: [low, medium, high] }
+            textureSensitivity: { type: string, enum: [low, medium, high] }
+        storage:
+          type: object
+          required: [shelfLifeValue, shelfLifeUnit, storageType, temperature, humidity, lightExposure]
+          properties:
+            shelfLifeValue: { type: number, exclusiveMinimum: 0 }
+            shelfLifeUnit: { type: string, enum: [days, weeks, months] }
+            storageType: { type: string, enum: [ambient, chilled, frozen] }
+            temperature: { type: number, minimum: -40, maximum: 60 }
+            humidity: { type: number, minimum: 0, maximum: 100 }
+            lightExposure: { type: string, enum: [low, medium, high] }
+        transportation:
+          type: object
+          required: [type, durationValue, durationUnit, mechanicalStress, temperatureFluctuation, humidityExposure, handlingConditions]
+          properties:
+            type: { type: string, enum: [local, regional, national, export] }
+            durationValue: { type: number, minimum: 0 }
+            durationUnit: { type: string, enum: [hours, days] }
+            mechanicalStress: { type: string, enum: [low, medium, high] }
+            temperatureFluctuation: { type: string, enum: [low, medium, high] }
+            humidityExposure: { type: string, enum: [low, medium, high] }
+            handlingConditions: { type: string, enum: [controlled, moderate, rough] }
+        preferences:
+          type: object
+          required: [priority, sustainability, budget, mapRequired, packageType]
+          properties:
+            priority: { type: string, enum: [shelf-life, cost, sustainability, balanced, protection] }
+            sustainability: { type: string, enum: [none, recyclable, biodegradable, compostable, strong] }
+            budget: { type: string, enum: [economy, standard, premium] }
+            mapRequired: { type: string, enum: [auto, yes, no] }
+            packageType: { type: string }
+    RecommendationSaveInput:
+      type: object
+      required: [input, result]
+      properties:
+        input:
+          $ref: "#/components/schemas/RecommendationInput"
+        result:
+          $ref: "#/components/schemas/RecommendationResult"
+    RecommendationAlternative:
+      type: object
+      required: [role, material, score, tradeoff]
+      properties:
+        role: { type: string, enum: [cost-conscious, sustainable] }
+        material:
+          $ref: "#/components/schemas/MaterialSummary"
+        score: { type: number, minimum: 0, maximum: 100 }
+        tradeoff: { type: string }
+    RecommendationResult:
+      type: object
+      required: [engineVersion, recommendation, score, strength, reasons, matchedRequirements, weakRequirements, specifications, alternatives, warnings, explanation, shelfLifeSupport, sustainability]
+      properties:
+        engineVersion: { type: string }
+        recommendation:
+          $ref: "#/components/schemas/Material"
+        score: { type: number, minimum: 0, maximum: 100 }
+        strength: { type: string, enum: [strong, good, conditional, insufficient] }
+        reasons:
+          type: array
+          items: { type: string }
+        matchedRequirements:
+          type: array
+          items: { type: string }
+        weakRequirements:
+          type: array
+          items: { type: string }
+        specifications:
+          type: object
+          required: [structure, thickness, otr, wvtr, sealability, mechanicalStrength, mapSuitability]
+          properties:
+            structure: { type: string }
+            thickness: { type: string }
+            otr: { type: string }
+            wvtr: { type: string }
+            sealability: { type: string }
+            mechanicalStrength: { type: string }
+            gasPermeability: { type: string }
+            mapSuitability: { type: string, enum: [recommended, conditional, not-recommended] }
+        alternatives:
+          type: array
+          minItems: 2
+          items:
+            $ref: "#/components/schemas/RecommendationAlternative"
+        warnings:
+          type: array
+          items: { type: string }
+        explanation: { type: string }
+        shelfLifeSupport:
+          type: object
+          required: [assessment, target, risks, controls]
+          properties:
+            assessment: { type: string }
+            target: { type: string }
+            risks:
+              type: array
+              items: { type: string }
+            controls:
+              type: array
+              items: { type: string }
+        sustainability:
+          type: object
+          required: [recyclability, biodegradability, compostability, tradeoff]
+          properties:
+            recyclability: { type: string }
+            biodegradability: { type: string }
+            compostability: { type: string }
+            tradeoff: { type: string }
+    Recommendation:
+      type: object
+      required: [id, commodityName, category, storageType, shelfLife, createdAt, input, result]
+      properties:
+        id: { type: integer }
+        commodityName: { type: string }
+        category: { type: string }
+        storageType: { type: string }
+        shelfLife: { type: string }
+        createdAt: { type: string, format: date-time }
+        shareId: { type: ["string", "null"] }
+        input:
+          $ref: "#/components/schemas/RecommendationInput"
+        result:
+          $ref: "#/components/schemas/RecommendationResult"
+    RecommendationSummary:
+      type: object
+      required: [id, commodityName, category, materialName, shelfLife, storageType, strength, createdAt]
+      properties:
+        id: { type: integer }
+        commodityName: { type: string }
+        category: { type: string }
+        materialName: { type: string }
+        shelfLife: { type: string }
+        storageType: { type: string }
+        strength: { type: string }
+        createdAt: { type: string, format: date-time }
+    DashboardSummary:
+      type: object
+      required: [totalRecommendations, recentRecommendations, savedProducts, averageShelfLife, topMaterials, latest]
+      properties:
+        totalRecommendations: { type: integer }
+        recentRecommendations: { type: integer }
+        savedProducts: { type: integer }
+        averageShelfLife: { type: string }
+        topMaterials:
+          type: array
+          items:
+            type: object
+            required: [materialName, count]
+            properties:
+              materialName: { type: string }
+              count: { type: integer }
+        latest:
+          type: array
+          items:
+            $ref: "#/components/schemas/RecommendationSummary"
+    PublicShare:
+      type: object
+      required: [shareId, url]
+      properties:
+        shareId: { type: string }
+        url: { type: string, format: uri }
+    PublicRecommendation:
+      type: object
+      required: [shareId, commodityName, category, materialName, structure, thickness, score, strength, explanation, warnings, createdAt]
+      properties:
+        shareId: { type: string }
+        commodityName: { type: string }
+        category: { type: string }
+        materialName: { type: string }
+        structure: { type: string }
+        thickness: { type: string }
+        score: { type: number }
+        strength: { type: string }
+        explanation: { type: string }
+        warnings:
+          type: array
+          items: { type: string }
+        createdAt: { type: string, format: date-time }

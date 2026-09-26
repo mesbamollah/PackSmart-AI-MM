@@ -1,0 +1,2069 @@
+# BUILD A REAL PRODUCTION-READY WEB APPLICATION FOR SIH 26236
+
+## 1. PROJECT IDENTITY
+
+Build a complete, production-oriented, responsive web application for the Smart India Hackathon problem statement:
+
+**Problem Statement ID:** 26236
+**Title:** AI-Based Intelligent Food Packaging Material Recommendation System for Food Commodities
+**Organization:** Ministry of Food Processing Industries (MoFPI)
+**Category:** Software
+**Theme:** Agriculture, FoodTech & Rural Development
+
+The application should be a genuine usable web product, NOT a static demo, NOT a collection of hardcoded screens, and NOT a fake AI interface.
+
+A user should be able to visit the deployed public URL from a phone, laptop, or tablet, create an account, enter food/product information, receive a dynamically generated packaging recommendation, save the result, view previous recommendations, and use the application again later.
+
+The application must be designed so that it can eventually be connected to a genuine trained machine-learning model without requiring a complete rewrite of the frontend/backend.
+
+---
+
+# 2. CORE PROBLEM
+
+Different food commodities require different packaging materials and packaging specifications.
+
+Incorrect packaging can cause:
+
+* moisture absorption
+* oxidation
+* microbial spoilage
+* texture degradation
+* nutrient loss
+* reduced shelf life
+* increased food waste
+* transportation losses
+
+Small food industries, farmers, startups, food processors, and researchers often do not have packaging-specialist knowledge.
+
+The application should therefore act as an intelligent decision-support system.
+
+The basic flow is:
+
+FOOD COMMODITY
+↓
+FOOD PROPERTIES
++
+STORAGE CONDITIONS
++
+TRANSPORT CONDITIONS
++
+TARGET SHELF LIFE
+↓
+RECOMMENDATION ENGINE
+↓
+PACKAGING MATERIAL RECOMMENDATION
+↓
+PACKAGING SPECIFICATIONS
+↓
+EXPLANATION + ALTERNATIVES
+↓
+SHELF-LIFE / COST / SUSTAINABILITY INSIGHTS
+
+---
+
+# 3. VERY IMPORTANT: THIS MUST BE A REAL APPLICATION
+
+Do NOT build a website where:
+
+* recommendation results are hardcoded
+* every food gets the same recommendation
+* buttons only show fake popups
+* login is fake
+* data disappears after refresh
+* dashboard contains static dummy cards
+* "AI" is only decorative text
+* charts contain meaningless random numbers
+* database functionality is simulated only in frontend state
+
+Instead:
+
+* use a real backend
+* use a real persistent database
+* implement real authentication
+* store users securely
+* store recommendation history per user
+* validate user input
+* calculate recommendations dynamically
+* use a structured packaging-material database
+* create real API endpoints
+* handle errors
+* protect user-specific data
+* make the application deployable
+* make the application usable by multiple users simultaneously
+
+A user who receives the public website URL should be able to independently use the application.
+
+---
+
+# 4. RECOMMENDED TECHNOLOGY STACK
+
+Use a modern, maintainable full-stack architecture.
+
+Preferred stack:
+
+## Frontend
+
+* React
+* TypeScript
+* Tailwind CSS
+* modern component library where appropriate
+* responsive design
+* accessible UI
+
+## Backend
+
+Use a Node.js/TypeScript backend if this provides the smoothest Replit deployment.
+
+Preferred:
+
+* Node.js
+* Express
+* TypeScript
+
+Create a clean REST API architecture.
+
+## Database
+
+Use PostgreSQL with a real persistent database.
+
+Use an ORM such as Prisma or Drizzle.
+
+Do NOT rely on browser localStorage as the main database.
+
+## Authentication
+
+Implement secure authentication.
+
+Minimum:
+
+* registration
+* login
+* logout
+* password hashing
+* session/token handling
+* protected dashboard
+* user-specific recommendation history
+
+Do not store plain-text passwords.
+
+## Deployment
+
+The application must be configured so it can run correctly on Replit and be deployed publicly.
+
+Use environment variables for:
+
+* database URL
+* authentication secrets
+* AI API keys if used
+* other private credentials
+
+Never expose secrets in frontend code.
+
+---
+
+# 5. BRANDING
+
+Create a professional Indian FoodTech / AI product identity.
+
+Suggested product name:
+
+**PackSmart AI**
+
+Subtitle:
+
+**Intelligent Food Packaging Recommendation System**
+
+The branding should communicate:
+
+* AI
+* food safety
+* packaging intelligence
+* sustainability
+* agriculture
+* technology
+
+Do not make it look like a generic AI chatbot.
+
+It should look like a serious FoodTech SaaS platform suitable for:
+
+* SIH presentation
+* farmers
+* food processors
+* startups
+* packaging professionals
+* researchers
+* students
+* small food businesses
+
+Use a clean modern visual system.
+
+Suggested visual direction:
+
+* white/light background
+* deep green as primary brand color
+* subtle blue/teal accents
+* dark text
+* rounded cards
+* clean charts
+* subtle gradients
+* professional icons
+* excellent whitespace
+
+Avoid excessive animations.
+
+---
+
+# 6. MAIN WEBSITE STRUCTURE
+
+Create these major sections:
+
+1. Landing Page
+2. About / How It Works
+3. Packaging Recommendation
+4. Recommendation Results
+5. User Dashboard
+6. Recommendation History
+7. Recommendation Details
+8. Packaging Materials Database
+9. Sustainability Analysis
+10. Profile / Settings
+11. Login
+12. Register
+13. Admin area
+14. Help / FAQ
+
+---
+
+# 7. LANDING PAGE
+
+Create a polished landing page.
+
+Hero section:
+
+Headline:
+
+**Smarter Food Packaging. Longer Shelf Life. Less Food Waste.**
+
+Supporting text:
+
+**PackSmart AI helps food businesses, farmers, researchers and manufacturers select suitable packaging materials and specifications based on food properties, storage conditions and target shelf life.**
+
+Primary CTA:
+
+**Get Packaging Recommendation**
+
+Secondary CTA:
+
+**How It Works**
+
+Include a visual representation of:
+
+Food Product → AI Analysis → Packaging Recommendation
+
+Show key benefits:
+
+### Intelligent Recommendations
+
+Analyze product and storage characteristics to identify suitable packaging options.
+
+### Packaging Specifications
+
+Get recommendations for OTR, WVTR, thickness, sealability, permeability and mechanical requirements.
+
+### Shelf-Life Support
+
+Evaluate packaging requirements against the desired shelf-life target.
+
+### Sustainability
+
+Compare conventional and more sustainable packaging alternatives.
+
+### Data-Driven Decisions
+
+Use structured packaging-material and food-property data instead of relying only on manual selection.
+
+---
+
+# 8. NAVIGATION
+
+Desktop navigation:
+
+Logo: PackSmart AI
+
+Links:
+
+* Home
+* Recommendation
+* Materials
+* How It Works
+* Dashboard
+
+Right side:
+
+* Login
+* Get Started
+
+For logged-in users:
+
+* Dashboard
+* New Recommendation
+* History
+* Profile
+* Logout
+
+Mobile navigation must use a proper responsive menu.
+
+---
+
+# 9. AUTHENTICATION
+
+Create real authentication.
+
+## Register
+
+Fields:
+
+* Full name
+* Email
+* Password
+* Confirm password
+* User type
+
+User types:
+
+* Farmer
+* Food Processor
+* Manufacturer
+* Startup
+* Researcher
+* Student
+* Other
+
+Validate all fields.
+
+Passwords must be securely hashed.
+
+## Login
+
+Fields:
+
+* Email
+* Password
+
+Include:
+
+* Remember session if appropriate
+* Forgot password UI
+* Error messages
+* Loading state
+
+After login:
+
+redirect to Dashboard.
+
+Unauthenticated users can view public pages but must log in before saving recommendations.
+
+---
+
+# 10. USER DASHBOARD
+
+Create a real dashboard.
+
+Top section:
+
+**Welcome, [User Name]**
+
+Primary CTA:
+
+**+ New Packaging Recommendation**
+
+Dashboard statistics:
+
+* Total Recommendations
+* Recent Recommendations
+* Saved Products
+* Average Target Shelf Life
+
+Recent recommendations table/cards:
+
+Columns:
+
+* Commodity
+* Date
+* Recommended Material
+* Target Shelf Life
+* Storage Type
+* Status
+* View
+
+Include empty state for new users.
+
+Example:
+
+"You haven't created any recommendations yet."
+
+Button:
+
+"Create Your First Recommendation"
+
+---
+
+# 11. PACKAGING RECOMMENDATION INPUT PAGE
+
+This is the most important page.
+
+Use a multi-step wizard rather than showing one huge form.
+
+Progress indicator:
+
+Step 1 — Product
+Step 2 — Properties
+Step 3 — Storage
+Step 4 — Transportation
+Step 5 — Preferences
+Step 6 — Analyze
+
+---
+
+# 12. STEP 1 — PRODUCT INFORMATION
+
+Fields:
+
+### Commodity Category
+
+Dropdown:
+
+* Fruits
+* Vegetables
+* Cereals
+* Pulses
+* Grains
+* Bakery
+* Snacks
+* Dairy
+* Meat
+* Fish
+* Spices
+* Dry Foods
+* Processed Foods
+* Other
+
+### Commodity Name
+
+Searchable dropdown/autocomplete.
+
+Include a starter database containing representative commodities such as:
+
+* Rice
+* Wheat
+* Potato
+* Onion
+* Tomato
+* Mango
+* Apple
+* Banana
+* Biscuits
+* Chips
+* Flour
+* Pulses
+* Spices
+* Milk powder
+* Ground coffee
+* Nuts
+* Dry fruits
+
+Allow:
+
+**Custom Commodity**
+
+so users are not limited to predefined products.
+
+---
+
+# 13. STEP 2 — FOOD PROPERTIES
+
+Collect:
+
+### Moisture Content
+
+Numeric input:
+
+%
+
+### Oil / Fat Content
+
+Numeric input:
+
+%
+
+### pH
+
+Numeric input.
+
+### Respiration Rate
+
+Allow:
+
+* Low
+* Medium
+* High
+* Very High
+
+For advanced users also allow numeric respiration input where appropriate.
+
+### Oxygen Sensitivity
+
+Options:
+
+* Low
+* Medium
+* High
+
+### Light Sensitivity
+
+Options:
+
+* Low
+* Medium
+* High
+
+### Microbial Sensitivity
+
+Options:
+
+* Low
+* Medium
+* High
+
+### Texture Sensitivity
+
+Options:
+
+* Low
+* Medium
+* High
+
+Provide tooltips explaining why each parameter matters.
+
+---
+
+# 14. STEP 3 — STORAGE CONDITIONS
+
+Fields:
+
+### Desired Shelf Life
+
+Number + unit:
+
+* Days
+* Weeks
+* Months
+
+### Storage Type
+
+* Ambient
+* Chilled
+* Frozen
+
+### Storage Temperature
+
+°C
+
+Provide sensible validation.
+
+### Relative Humidity
+
+%
+
+### Exposure to Light
+
+* Low
+* Medium
+* High
+
+### Expected Storage Duration
+
+Should correspond logically to target shelf life.
+
+---
+
+# 15. STEP 4 — TRANSPORTATION CONDITIONS
+
+Fields:
+
+### Transportation Type
+
+* Local
+* Regional
+* National
+* Export
+
+### Transportation Duration
+
+Hours/days.
+
+### Mechanical Stress
+
+* Low
+* Medium
+* High
+
+### Temperature Fluctuation
+
+* Low
+* Medium
+* High
+
+### Humidity Exposure
+
+* Low
+* Medium
+* High
+
+### Handling Conditions
+
+* Controlled
+* Moderate
+* Rough
+
+---
+
+# 16. STEP 5 — PACKAGING PREFERENCES
+
+Allow users to specify:
+
+### Priority
+
+* Maximum Shelf Life
+* Lowest Cost
+* Sustainability
+* Balanced
+* Maximum Product Protection
+
+### Sustainability Preference
+
+* No preference
+* Prefer recyclable
+* Prefer biodegradable
+* Prefer compostable
+* Strongly prioritize sustainability
+
+### Budget Preference
+
+* Economy
+* Standard
+* Premium
+
+### MAP Required?
+
+* Automatically determine
+* Yes
+* No
+
+### Package Type
+
+* Pouch
+* Bag
+* Tray
+* Sachet
+* Bottle
+* Container
+* Flexible film
+* User-defined
+
+---
+
+# 17. VALIDATION
+
+Before analysis:
+
+Validate:
+
+* required fields
+* numeric ranges
+* logical combinations
+* temperature ranges
+* humidity 0–100%
+* pH 0–14
+* moisture cannot be negative
+* shelf life cannot be zero
+* transportation duration cannot be negative
+
+Display clear friendly validation messages.
+
+Do not allow invalid values to reach the recommendation engine.
+
+---
+
+# 18. ANALYSIS EXPERIENCE
+
+When user clicks:
+
+**Generate Recommendation**
+
+show a professional analysis screen.
+
+Do NOT fake a long loading animation.
+
+The backend should actually process the request.
+
+Display stages such as:
+
+1. Analyzing food characteristics
+2. Evaluating storage conditions
+3. Matching packaging materials
+4. Calculating barrier requirements
+5. Evaluating sustainability and cost
+6. Generating recommendation
+
+Then show the result.
+
+---
+
+# 19. RECOMMENDATION ENGINE
+
+Create a modular recommendation engine in the backend.
+
+Do NOT hardcode one recommendation.
+
+Create a structured packaging material database.
+
+Each material should contain fields such as:
+
+* material name
+* material category
+* polymer/material family
+* typical applications
+* moisture barrier rating
+* oxygen barrier rating
+* light barrier rating
+* gas permeability characteristics
+* typical thickness range
+* sealability
+* mechanical strength
+* temperature suitability
+* recyclability
+* biodegradability
+* compostability
+* estimated relative cost
+* MAP suitability
+* fresh produce suitability
+* advantages
+* limitations
+* food compatibility notes
+
+Starter materials should include:
+
+* LDPE
+* HDPE
+* PET
+* PP
+* BOPP
+* Metallized PET
+* Aluminum foil laminate
+* Paper-based laminate
+* EVOH-containing multilayer
+* Biodegradable films
+* Compostable films
+* Breathable films
+* Micro-perforated films
+
+Do not claim exact technical values unless supported by the database.
+
+Use ranges where appropriate.
+
+---
+
+# 20. RECOMMENDATION ALGORITHM
+
+Build a transparent weighted scoring engine.
+
+For every candidate packaging material calculate a compatibility score based on factors such as:
+
+* moisture barrier requirement
+* oxygen barrier requirement
+* light protection
+* mechanical strength
+* temperature compatibility
+* target shelf life
+* food compatibility
+* sealability
+* MAP suitability
+* sustainability preference
+* cost preference
+
+Use a configurable scoring architecture rather than scattering rules throughout the code.
+
+Example conceptual structure:
+
+Product requirements
++
+Material properties
++
+User priorities
+===============
+
+Compatibility score
+
+The exact scoring weights should be stored/configurable rather than hardcoded throughout the UI.
+
+The backend should return:
+
+* top recommendation
+* alternative recommendations
+* score
+* matched requirements
+* unmet/weak requirements
+* reasons
+* warnings
+* specifications
+
+IMPORTANT:
+
+Do not present this scoring engine as a trained machine-learning model.
+
+Label it appropriately as a:
+
+**Data-Driven Intelligent Recommendation Engine**
+
+until a genuine trained ML model is connected.
+
+Design the code so an ML model can later replace or augment the scoring engine.
+
+---
+
+# 21. AI EXPLANATION LAYER
+
+After the recommendation engine selects the candidate material, generate a human-readable explanation.
+
+If an external LLM API is configured, use it only to explain structured recommendation results.
+
+The LLM must NOT independently invent technical packaging specifications.
+
+The structured recommendation engine/database is the source of truth for technical values.
+
+Explanation example:
+
+"Because the selected product has relatively high moisture sensitivity and a long target shelf life, the system prioritized packaging with stronger moisture and oxygen barrier performance. The selected structure also matches the requested storage conditions."
+
+Always distinguish:
+
+* calculated result
+* database information
+* AI-generated explanation
+
+If no AI API key is available, provide a deterministic explanation generated from the recommendation data.
+
+The application must still work without an external AI API.
+
+---
+
+# 22. RESULTS PAGE
+
+Create a beautiful professional result page.
+
+Header:
+
+**Packaging Recommendation**
+
+Show:
+
+### Recommended Packaging
+
+Material name
+
+Large recommendation card.
+
+Example structure:
+
+**Recommended Material**
+PET/PE multilayer
+
+**Recommended Structure**
+Outer PET + PE sealing layer
+
+**Suggested Thickness**
+Show a range from the database/recommendation engine.
+
+Do not fabricate exact values.
+
+---
+
+# 23. PACKAGING SPECIFICATIONS
+
+Show cards for:
+
+### OTR
+
+Oxygen Transmission Rate
+
+Explain:
+
+"Lower OTR generally indicates stronger oxygen barrier performance."
+
+### WVTR
+
+Water Vapor Transmission Rate
+
+Explain:
+
+"Lower WVTR generally indicates stronger moisture barrier performance."
+
+### Film Thickness
+
+Show recommended range.
+
+### Sealability
+
+Show rating.
+
+### Mechanical Strength
+
+Show rating.
+
+### Gas Permeability
+
+Show relevant information.
+
+### MAP Suitability
+
+Show:
+
+Recommended / Conditional / Not Recommended
+
+---
+
+# 24. MAP MODULE
+
+For products where modified atmosphere packaging is relevant, display:
+
+**Modified Atmosphere Packaging**
+
+Include:
+
+* MAP suitability
+* recommended approach
+* oxygen considerations
+* carbon dioxide considerations
+* nitrogen considerations
+* breathable/micro-perforated recommendation where applicable
+
+IMPORTANT:
+
+Do not invent scientifically precise gas percentages without validated data.
+
+Where the system lacks validated commodity-specific data, clearly label the recommendation as:
+
+**Indicative starting range — validate experimentally before commercial use.**
+
+This is especially important for real-world food packaging decisions.
+
+---
+
+# 25. FRESH PRODUCE MODULE
+
+If commodity is a fresh fruit or vegetable:
+
+activate additional analysis.
+
+Show:
+
+* Respiration rate
+* O₂ requirement
+* CO₂ requirement
+* moisture management
+* breathable film suitability
+* micro-perforation suitability
+* condensation risk
+* MAP suitability
+
+The recommendation engine should prioritize packaging that permits appropriate gas exchange instead of blindly recommending high-barrier packaging.
+
+---
+
+# 26. ALTERNATIVES
+
+Show three types:
+
+### Primary Recommendation
+
+Best match to entered requirements.
+
+### Cost-Conscious Alternative
+
+Material option that may reduce relative packaging cost while maintaining acceptable compatibility.
+
+### Sustainable Alternative
+
+Material option prioritizing recyclability/biodegradability/compostability according to available database information.
+
+Do not label these alternatives as universally "best".
+
+Explain the trade-offs.
+
+---
+
+# 27. TRADE-OFF ANALYSIS
+
+Create a visual comparison.
+
+Compare:
+
+| Factor              | Recommended | Alternative | Sustainable |
+| ------------------- | ----------- | ----------- | ----------- |
+| Barrier Performance | ...         | ...         | ...         |
+| Moisture Protection | ...         | ...         | ...         |
+| Oxygen Protection   | ...         | ...         | ...         |
+| Mechanical Strength | ...         | ...         | ...         |
+| Sealability         | ...         | ...         | ...         |
+| Sustainability      | ...         | ...         | ...         |
+| Relative Cost       | ...         | ...         | ...         |
+
+Use actual database values/ratings.
+
+---
+
+# 28. SHELF-LIFE ANALYSIS
+
+Create a shelf-life section.
+
+Show:
+
+Target shelf life
+
+and
+
+Packaging suitability for the target.
+
+If the system has validated predictive data, show a predicted range.
+
+If no validated shelf-life ML model exists, DO NOT falsely claim an exact predicted shelf life.
+
+Instead show:
+
+**Shelf-Life Support Assessment**
+
+* Target shelf life
+* Packaging suitability
+* Main degradation risks
+* Recommended controls
+
+Create architecture for future integration of a trained shelf-life prediction model.
+
+---
+
+# 29. SUSTAINABILITY ANALYSIS
+
+Show:
+
+* Recyclability
+* Biodegradability
+* Compostability
+* Material efficiency
+* Relative environmental considerations
+
+Create a sustainability score ONLY if there is a defined methodology.
+
+Do not invent environmental impact numbers.
+
+Explain trade-offs.
+
+Example:
+
+"Material A may provide stronger barrier performance, while Material B provides a more favorable recyclability profile. Final selection should consider the required barrier performance and local waste-management infrastructure."
+
+---
+
+# 30. COST ANALYSIS
+
+Provide relative cost comparison.
+
+If actual market-price data is unavailable:
+
+DO NOT pretend the numbers are live market prices.
+
+Use:
+
+* Relative cost: Low / Medium / High
+
+and explain that actual costs depend on:
+
+* supplier
+* volume
+* thickness
+* printing
+* conversion
+* region
+* order quantity
+
+Create architecture so real supplier pricing can be integrated later.
+
+---
+
+# 31. RECOMMENDATION CONFIDENCE
+
+Do NOT display a fake AI confidence percentage.
+
+Instead, if useful, show:
+
+**Recommendation Strength**
+
+based on the completeness and quality of the available material/food data.
+
+For example:
+
+* Strong Match
+* Good Match
+* Conditional Match
+* Insufficient Data
+
+Clearly explain why.
+
+---
+
+# 32. WARNINGS
+
+Create an intelligent warnings section.
+
+Examples:
+
+* "The target shelf life is unusually long for the selected storage condition."
+* "Respiration information is missing for this fresh produce item."
+* "The selected packaging may require experimental validation."
+* "The recommendation is based on available material-property data."
+* "Commercial packaging selection should be validated with food-contact and regulatory requirements."
+
+Warnings should be dynamically generated based on actual input.
+
+---
+
+# 33. SAVE RECOMMENDATION
+
+Button:
+
+**Save Recommendation**
+
+Save:
+
+* user ID
+* input parameters
+* recommendation
+* alternatives
+* material IDs
+* timestamp
+* engine version
+
+Each saved recommendation should have a unique ID.
+
+---
+
+# 34. RECOMMENDATION HISTORY
+
+Create:
+
+**My Recommendations**
+
+Allow:
+
+* search
+* filtering
+* sorting
+* date filtering
+* commodity filtering
+* storage type filtering
+
+Each record:
+
+Commodity
+Date
+Recommended material
+Target shelf life
+Storage type
+Status
+
+Clicking a record opens its complete recommendation.
+
+---
+
+# 35. REPORT GENERATION
+
+Add:
+
+**Download Report**
+
+Generate a professional PDF report containing:
+
+* PackSmart AI branding
+* user/project information
+* commodity
+* entered product properties
+* storage conditions
+* transportation conditions
+* recommendation
+* packaging specifications
+* alternatives
+* sustainability analysis
+* warnings
+* date
+* recommendation ID
+
+Include a disclaimer:
+
+"This report is a decision-support output based on the information supplied and the packaging-property database available to the system. Packaging suitability should be validated through appropriate laboratory, food-contact, shelf-life and regulatory testing before commercial deployment."
+
+---
+
+# 36. QR CODE
+
+Allow:
+
+**Generate QR**
+
+QR should point to a public recommendation-summary URL.
+
+Example concept:
+
+/recommendation/public/{unique-id}
+
+The public page should reveal only information intended for sharing.
+
+Do not expose:
+
+* password
+* private account information
+* unnecessary personal data
+
+The user should be able to share the QR code with someone else.
+
+---
+
+# 37. PACKAGING MATERIAL DATABASE PAGE
+
+Create a public materials explorer.
+
+Searchable database.
+
+Filters:
+
+* material type
+* barrier performance
+* sustainability
+* cost category
+* MAP suitability
+* food category suitability
+
+Material detail page:
+
+* overview
+* properties
+* applications
+* advantages
+* limitations
+* sustainability
+* compatibility
+* typical thickness range
+* technical notes
+
+Clearly distinguish database/reference information from individualized recommendations.
+
+---
+
+# 38. HOW IT WORKS PAGE
+
+Explain the system in simple language.
+
+### Step 1
+
+Enter food characteristics.
+
+### Step 2
+
+Enter storage and transportation conditions.
+
+### Step 3
+
+The recommendation engine evaluates packaging requirements.
+
+### Step 4
+
+Candidate materials are compared against those requirements.
+
+### Step 5
+
+The system generates a packaging recommendation and alternatives.
+
+### Step 6
+
+The user can save, compare and export the result.
+
+Create a visual pipeline.
+
+---
+
+# 39. FAQ
+
+Include questions such as:
+
+* What is OTR?
+* What is WVTR?
+* What is MAP?
+* Why does food moisture matter?
+* Why does respiration matter for fruits and vegetables?
+* Can I use the recommendation directly for commercial packaging?
+* Is this a trained AI model?
+* What does the sustainability analysis mean?
+* Can I use a custom commodity?
+* Can I save my recommendations?
+
+---
+
+# 40. DATABASE DESIGN
+
+Create proper relational database tables.
+
+Suggested tables:
+
+### users
+
+* id
+* name
+* email
+* password_hash
+* user_type
+* created_at
+* updated_at
+
+### commodities
+
+* id
+* name
+* category
+* moisture_range
+* typical_ph_range
+* respiration_class
+* oxygen_sensitivity
+* moisture_sensitivity
+* light_sensitivity
+* microbial_sensitivity
+* created_at
+
+### packaging_materials
+
+* id
+* name
+* category
+* description
+* moisture_barrier_rating
+* oxygen_barrier_rating
+* light_barrier_rating
+* gas_permeability_rating
+* sealability_rating
+* mechanical_strength_rating
+* temperature_min
+* temperature_max
+* typical_thickness_min
+* typical_thickness_max
+* recyclability
+* biodegradability
+* compostability
+* relative_cost
+* map_suitability
+* fresh_produce_suitability
+* advantages
+* limitations
+* created_at
+* updated_at
+
+### recommendations
+
+* id
+* user_id
+* commodity_id
+* input_data
+* primary_material_id
+* alternative_material_id
+* sustainable_material_id
+* recommendation_data
+* engine_version
+* created_at
+* updated_at
+
+### recommendation_materials
+
+Store the candidate scoring information.
+
+### public_reports
+
+* id
+* recommendation_id
+* public_token
+* created_at
+* expires_at if needed
+
+### audit_logs
+
+For important application events.
+
+---
+
+# 41. API ARCHITECTURE
+
+Create clean REST endpoints.
+
+Example:
+
+POST /api/auth/register
+
+POST /api/auth/login
+
+POST /api/auth/logout
+
+GET /api/auth/me
+
+GET /api/commodities
+
+GET /api/commodities/:id
+
+GET /api/materials
+
+GET /api/materials/:id
+
+POST /api/recommendations/analyze
+
+POST /api/recommendations
+
+GET /api/recommendations
+
+GET /api/recommendations/:id
+
+DELETE /api/recommendations/:id
+
+POST /api/recommendations/:id/report
+
+POST /api/recommendations/:id/qr
+
+GET /api/public/recommendations/:token
+
+Protect private endpoints with authentication.
+
+---
+
+# 42. SECURITY
+
+Implement basic production security:
+
+* password hashing
+* secure authentication
+* input validation
+* authorization
+* user-specific data access
+* API error handling
+* rate limiting where appropriate
+* protection against common injection attacks
+* environment variables for secrets
+* no API keys in frontend
+* no password logging
+* safe database queries
+
+A user must never be able to access another user's private recommendations by changing an ID in the URL.
+
+---
+
+# 43. ADMIN AREA
+
+Create a protected admin dashboard.
+
+Admin capabilities:
+
+* manage commodities
+* manage packaging materials
+* add/edit material properties
+* activate/deactivate materials
+* view system usage statistics
+* view recommendation counts
+* manage reference data
+
+Do not expose admin routes to normal users.
+
+Use role-based access control.
+
+---
+
+# 44. RESPONSIVE DESIGN
+
+The website must work properly on:
+
+* desktop
+* laptop
+* tablet
+* mobile phone
+
+Do not simply shrink the desktop UI.
+
+For mobile:
+
+* responsive cards
+* collapsible navigation
+* touch-friendly buttons
+* forms split into manageable sections
+* readable charts
+* horizontally scrollable tables where necessary
+
+---
+
+# 45. UX DETAILS
+
+Use:
+
+* clear labels
+* tooltips
+* inline validation
+* loading states
+* success messages
+* error messages
+* empty states
+* skeleton loaders where useful
+* confirmation dialogs for destructive actions
+
+Never leave the user wondering whether an action worked.
+
+---
+
+# 46. ACCESSIBILITY
+
+Implement:
+
+* semantic HTML
+* keyboard navigation
+* accessible labels
+* appropriate contrast
+* focus states
+* screen-reader-friendly form controls
+
+---
+
+# 47. ERROR HANDLING
+
+Create user-friendly error states.
+
+Examples:
+
+"Unable to generate recommendation right now. Please try again."
+
+"Some required product information is missing."
+
+"Your session has expired. Please log in again."
+
+Do not show raw database errors or stack traces to users.
+
+Log technical errors on the server.
+
+---
+
+# 48. SEED DATA
+
+Populate the initial database with meaningful reference data.
+
+Include at least:
+
+15–20 commodities across several categories.
+
+Include at least:
+
+15–20 packaging materials.
+
+The seed data should contain realistic structured qualitative/technical properties.
+
+Do NOT invent scientific precision.
+
+Where exact values are uncertain, use clearly labeled qualitative ranges/categories.
+
+Structure the database so additional validated data can be added later.
+
+---
+
+# 49. DATA QUALITY AND SCIENTIFIC RESPONSIBILITY
+
+This is extremely important.
+
+This application is intended as a decision-support tool.
+
+Do not claim:
+
+* guaranteed shelf life
+* guaranteed food safety
+* guaranteed commercial packaging compliance
+* exact scientific performance without validated data
+* regulatory approval
+* laboratory-certified recommendations
+
+For commercial use, clearly communicate that recommendations require validation through appropriate:
+
+* food-contact testing
+* shelf-life testing
+* permeability testing
+* seal testing
+* mechanical testing
+* microbiological testing
+* applicable Indian/international regulations
+
+The UI should communicate this professionally rather than frightening the user.
+
+---
+
+# 50. FUTURE ML ARCHITECTURE
+
+Design the backend so the recommendation engine can eventually have:
+
+### Version 1
+
+Rule/weighted scoring engine.
+
+### Version 2
+
+Machine-learning model.
+
+Potential future ML inputs:
+
+* moisture
+* fat
+* pH
+* respiration
+* temperature
+* humidity
+* shelf life
+* transport conditions
+* packaging properties
+
+Potential outputs:
+
+* material suitability
+* barrier requirements
+* recommended thickness range
+* MAP suitability
+* shelf-life estimate
+
+Create a clean interface such as:
+
+RecommendationEngine
+
+so different implementations can be plugged in later.
+
+Do not train a fake model with random data.
+
+---
+
+# 51. AI CHAT ASSISTANT — OPTIONAL
+
+Add an optional assistant called:
+
+**PackSmart Assistant**
+
+It can answer questions such as:
+
+* "Why did the system recommend PET/PE?"
+* "What is OTR?"
+* "What is WVTR?"
+* "Why is MAP useful for fresh produce?"
+* "What happens if I increase the target shelf life?"
+
+The assistant should use the current recommendation context.
+
+It should NOT override the structured recommendation engine.
+
+It should explain rather than invent technical specifications.
+
+---
+
+# 52. ANALYTICS
+
+For the user dashboard show:
+
+* recommendations created
+* most frequently analyzed commodities
+* storage type distribution
+* packaging-material distribution
+
+For admin:
+
+* total users
+* total recommendations
+* popular commodities
+* popular packaging materials
+* recommendation activity over time
+
+Do not display fake statistics.
+
+Only show real database data.
+
+---
+
+# 53. UI COMPONENTS
+
+Create reusable components:
+
+* Navbar
+* Footer
+* Button
+* Card
+* Input
+* Select
+* Tooltip
+* Modal
+* Stepper
+* Progress indicator
+* RecommendationCard
+* MaterialCard
+* SpecificationCard
+* ComparisonTable
+* Chart
+* Alert
+* EmptyState
+* LoadingState
+* ErrorState
+
+Keep components reusable and maintainable.
+
+---
+
+# 54. CODE QUALITY
+
+Use:
+
+* TypeScript
+* strong typing
+* modular files
+* reusable components
+* service layer
+* database layer
+* validation schemas
+* clean API controllers
+* clear naming
+* comments only where useful
+
+Avoid putting the entire application in one file.
+
+Organize frontend and backend logically.
+
+---
+
+# 55. ENVIRONMENT VARIABLES
+
+Create a safe environment configuration.
+
+Example:
+
+DATABASE_URL=
+SESSION_SECRET=
+AI_API_KEY=
+
+If an AI API is not configured, the application must continue functioning using deterministic recommendation explanations.
+
+Never hardcode secrets.
+
+Provide a clear README explaining which environment variables are required.
+
+---
+
+# 56. TESTING
+
+Create tests for important backend logic.
+
+At minimum test:
+
+* authentication
+* input validation
+* recommendation engine
+* material scoring
+* user authorization
+* recommendation creation
+* recommendation retrieval
+
+Create test cases where changing input actually changes recommendation scoring.
+
+For example:
+
+Case A:
+
+High moisture + long shelf life
+
+should prioritize materials with stronger moisture/barrier characteristics.
+
+Case B:
+
+Fresh produce + high respiration
+
+should consider breathable/micro-perforated packaging.
+
+Case C:
+
+High oxygen sensitivity
+
+should prioritize stronger oxygen barrier characteristics.
+
+Case D:
+
+Strong sustainability preference
+
+should change the ranking/trade-off analysis where suitable alternatives exist.
+
+---
+
+# 57. DEMO / DEVELOPMENT DATA
+
+You may include seed data for development.
+
+However, clearly separate:
+
+* real application functionality
+* seed/reference data
+
+Do not make the production UI say that fake seed records are actual users.
+
+The application's recommendation logic must work for new users entering new data.
+
+---
+
+# 58. LANDING PAGE DEMONSTRATION
+
+For visitors who are not logged in, allow them to explore the application.
+
+They can see:
+
+* how it works
+* sample recommendation explanation
+* sample packaging material information
+
+But clearly label sample information as:
+
+**Example / Illustrative Result**
+
+Do not mix example results with real user data.
+
+---
+
+# 59. PUBLIC USER EXPERIENCE
+
+The final deployed website should support this exact real-world flow:
+
+A friend receives the website URL.
+
+They open it.
+
+They see:
+
+**PackSmart AI**
+
+They click:
+
+**Get Started**
+
+They create an account.
+
+They enter:
+
+Commodity: Mango
+Moisture: user input
+Storage: Chilled
+Target shelf life: user input
+Humidity: user input
+Transportation: user input
+
+They click:
+
+**Generate Recommendation**
+
+The backend analyzes the input.
+
+The system retrieves compatible packaging materials.
+
+The scoring engine evaluates them.
+
+The application displays:
+
+* primary recommendation
+* alternatives
+* packaging specifications
+* reasoning
+* sustainability information
+* warnings
+* trade-offs
+
+The user saves the recommendation.
+
+It appears in their dashboard.
+
+They can later return and access it.
+
+This must work for multiple independent users.
+
+---
+
+# 60. IMPORTANT: DO NOT OVERBUILD THE FIRST VERSION
+
+Prioritize working functionality.
+
+Build in this order:
+
+PHASE 1
+
+* project setup
+* frontend
+* backend
+* PostgreSQL
+* authentication
+
+PHASE 2
+
+* commodity database
+* packaging database
+* recommendation engine
+
+PHASE 3
+
+* recommendation wizard
+* result page
+* history
+
+PHASE 4
+
+* sustainability
+* comparison
+* dashboard
+* reports
+
+PHASE 5
+
+* QR
+* admin
+* analytics
+
+PHASE 6
+
+* optional AI explanation
+* future ML architecture
+
+Do not spend most of the development effort on decorative animations.
+
+---
+
+# 61. IMPORTANT REPLIT AGENT BEHAVIOR
+
+Do not simply generate the entire project and stop.
+
+First inspect the project environment.
+
+Then:
+
+1. Set up architecture.
+2. Create database schema.
+3. Configure database connection.
+4. Implement authentication.
+5. Implement backend.
+6. Implement recommendation engine.
+7. Implement frontend.
+8. Connect frontend to backend.
+9. Seed database.
+10. Run tests.
+11. Fix errors.
+12. Run the complete application.
+13. Verify major user flows.
+14. Ensure production/deployment configuration works.
+
+Whenever you encounter an error, fix the underlying issue rather than hiding it.
+
+Do not replace backend functionality with frontend mock data just to make the UI work.
+
+---
+
+# 62. FINAL ACCEPTANCE CRITERIA
+
+The project is complete only when:
+
+### Authentication
+
+* [ ] User can register
+* [ ] User can log in
+* [ ] User can log out
+* [ ] Passwords are securely stored
+* [ ] Protected pages work
+
+### Database
+
+* [ ] PostgreSQL is connected
+* [ ] User data persists
+* [ ] Recommendation data persists
+* [ ] Material data persists
+* [ ] Data remains after refresh/re-login
+
+### Recommendation
+
+* [ ] User can enter product properties
+* [ ] User can enter storage conditions
+* [ ] User can enter transportation conditions
+* [ ] User can enter preferences
+* [ ] Backend analyzes the inputs
+* [ ] Results are dynamically generated
+* [ ] Different inputs can produce different rankings
+* [ ] Results contain explanations
+* [ ] Alternatives are shown
+* [ ] Warnings are shown when appropriate
+
+### Dashboard
+
+* [ ] Real recommendation count
+* [ ] Real recommendation history
+* [ ] User-specific data
+* [ ] Search/filter works
+
+### Reports
+
+* [ ] Recommendation can be saved
+* [ ] PDF report can be generated
+* [ ] QR sharing works
+
+### Responsive
+
+* [ ] Desktop works
+* [ ] Tablet works
+* [ ] Mobile works
+
+### Security
+
+* [ ] Users cannot access another user's recommendations
+* [ ] Secrets are protected
+* [ ] API validates input
+
+### Deployment
+
+* [ ] Application runs successfully on Replit
+* [ ] Production build works
+* [ ] Public URL can be accessed
+* [ ] Multiple users can use the application
+
+---
+
+# 63. FINAL PRODUCT VISION
+
+The finished application should feel like a genuine FoodTech platform, not a college-project template.
+
+The core experience should be:
+
+**Understand the food → Understand the environment → Analyze packaging requirements → Compare materials → Recommend suitable packaging → Explain why → Save/share the result.**
+
+The application should be visually impressive enough for an SIH presentation while remaining technically functional enough that a real user can access the public URL and use the system independently.
+
+Prioritize:
+
+1. Correct functionality
+2. Real database persistence
+3. Real authentication
+4. Dynamic recommendation logic
+5. Clear scientific communication
+6. Excellent UX
+7. Responsive design
+8. Maintainable architecture
+9. Deployment reliability
+10. Future ML integration
+
+Build this as a real application from the beginning.
