@@ -12,6 +12,14 @@ import {
 } from "./middlewares/clerkProxyMiddleware";
 
 const app: Express = express();
+app.use(cors({
+  origin: [
+    'https://packsmart-ai-app.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
+  credentials: true
+}));
 
 app.use(
   pinoHttp({
