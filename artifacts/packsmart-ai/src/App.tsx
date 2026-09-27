@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ButtonHTMLAttributes, type CSSProperties, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { ClerkProvider, SignIn, SignUp, useAuth, useClerk, useUser } from '@clerk/react';
-import { publishableKeyFromHost } from '@clerk/react/internal';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   ArrowRight, BarChart3, Beaker, Check, ChevronLeft, ChevronRight, CircleAlert, Clipboard, Database,
