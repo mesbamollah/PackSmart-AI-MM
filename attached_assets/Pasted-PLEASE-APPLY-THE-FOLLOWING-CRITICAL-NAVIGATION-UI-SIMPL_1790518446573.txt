@@ -1,0 +1,25 @@
+PLEASE APPLY THE FOLLOWING CRITICAL NAVIGATION, UI SIMPLIFICATION, AND 3D VISUALIZATION ENHANCEMENTS TO PACKSMART AI:
+
+1. GLOBAL NAVIGATION & BACK BUTTON FIX:
+- Ensure the main Top Navbar and/or Left Sidebar (Dashboard) remain visible on EVERY single subpage (How It Works, Materials Library, Recommendation Results, History, FAQ, Profile).
+- On pages like "How It Works" (/how-it-works) and "Materials Library" (/materials), add a clear top bar with a "← Back to Dashboard" / "← Back to Home" button so users never get trapped on a full screen without an explicit back navigation path.
+- Enable breadcrumbs at the top of every inner page (e.g., Home / Workspace / Materials Library).
+
+2. SIMPLIFIED & CLEANER UI:
+- Simplify card layouts and reduce cluttered text across the Dashboard, Materials Library, and Results pages.
+- Increase whitespace, use clean rounded cards, high-contrast dark forest-green buttons, and bold metrics.
+- Keep tooltips compact and easy to read.
+
+3. 3D / REALISTIC PACKAGING PREVIEW FOR RECOMMENDED MATERIALS:
+- On the Recommendation Results page (where the winning material like "PET / EVOH / PE" or "Metallized PET" is revealed), add an interactive 3D / realistic packaging visualization card.
+- Use Three.js / @react-three/fiber OR CSS 3D realistic card rendering to display a dynamic 3D mock representation of the package (e.g., a rotating 3D Pouch, Rigid Tray with Lidding Film, Flexible Sachet, or Bottle depending on package type).
+- Include material layer indicators on the 3D model (e.g., Outer Layer: PET, Barrier Layer: EVOH, Inner Sealing Layer: PE).
+- Allow the user to drag to rotate or auto-rotate the 3D packaging structure for better spatial understanding.
+- Fallback: If 3D rendering is loading, display an ultra-clean 2D/3D high-resolution mockup render badge with structure callouts.
+
+4. MATERIALS LIBRARY PAGE IMPROVEMENT:
+- Add a top header with a "← Back to Workspace" button.
+- Clean up the filter dropdowns and material cards. When clicking a material, open a modal popup with full technical details and a 3D structural mockup instead of navigating away.
+
+5. VERIFY & APPLY ACROSS ALL ROUTES:
+- Test and verify that every page allows one-click navigation back to the main Workspace/Dashboard.

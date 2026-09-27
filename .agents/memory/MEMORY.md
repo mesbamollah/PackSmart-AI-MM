@@ -1,0 +1,1 @@
+- [PackSmart visual direction](packsmart-visual-direction.md) — keep packaging previews explainable and dependency-light with CSS 3D and explicit layer callouts.
