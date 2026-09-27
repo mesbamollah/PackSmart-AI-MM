@@ -151,6 +151,33 @@ function shelfLifeLabel(input: RecommendationInput): string {
   return `${input.storage.shelfLifeValue} ${input.storage.shelfLifeUnit}`;
 }
 
+function otrRequirement(input: RecommendationInput, material: MaterialView): string {
+  const fresh = isFreshProduce(input);
+  const target = fresh
+    ? `Controlled OTR / CO₂ exchange for ${input.properties.respirationRate} respiration`
+    : level[input.properties.oxygenSensitivity] >= 3
+      ? "Low OTR profile for oxygen-sensitive food"
+      : "Moderate OTR profile for the entered oxygen sensitivity";
+  return `${target}; catalog capability: ${material.properties.oxygenBarrier} oxygen barrier`;
+}
+
+function wvtrRequirement(input: RecommendationInput, material: MaterialView): string {
+  const highMoistureDemand = level[input.properties.microbialSensitivity] >= 3 || input.properties.moistureContent >= 20 || input.storage.humidity >= 70;
+  const target = highMoistureDemand ? "Low WVTR / strong moisture control" : "Moderate WVTR / balanced moisture control";
+  return `${target} at ${input.storage.humidity}% RH; catalog capability: ${material.properties.moistureBarrier} moisture barrier`;
+}
+
+function gasPermeabilityRequirement(input: RecommendationInput, material: MaterialView): string {
+  return isFreshProduce(input)
+    ? `Controlled O₂ / CO₂ exchange for ${input.properties.respirationRate} respiration; catalog: ${material.properties.gasPermeability}`
+    : material.properties.gasPermeability;
+}
+
+function mechanicalRequirement(input: RecommendationInput, material: MaterialView): string {
+  const handlingDemand = input.transportation.handlingConditions === "rough" ? "high" : input.transportation.handlingConditions;
+  return `${material.properties.mechanicalStrength}; ${handlingDemand} handling / ${input.transportation.mechanicalStress} transport stress`;
+}
+
 export function buildRecommendation(input: RecommendationInput, rows: MaterialRow[]) {
   const materials = rows.map(materialFromRow);
   const ranked = materials
@@ -214,11 +241,11 @@ export function buildRecommendation(input: RecommendationInput, rows: MaterialRo
     specifications: {
       structure,
       thickness: primary.material.thicknessRange,
-      otr: primary.material.properties.oxygenRating >= 4 ? "Low OTR range supported by database profile" : "Moderate OTR range; validate against target",
-      wvtr: primary.material.properties.moistureRating >= 4 ? "Low WVTR range supported by database profile" : "Moderate WVTR range; validate against target",
+      otr: otrRequirement(input, primary.material),
+      wvtr: wvtrRequirement(input, primary.material),
       sealability: primary.material.properties.sealability,
-      mechanicalStrength: primary.material.properties.mechanicalStrength,
-      gasPermeability: primary.material.properties.gasPermeability,
+      mechanicalStrength: mechanicalRequirement(input, primary.material),
+      gasPermeability: gasPermeabilityRequirement(input, primary.material),
       mapSuitability,
     },
     alternatives: [

@@ -278,7 +278,7 @@
 
   .package-stage {
     position: relative;
-    min-height: 270px;
+    min-height: 310px;
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -290,18 +290,30 @@
       linear-gradient(45deg, hsl(var(--secondary)) 25%, hsl(var(--background)) 25%) 0 0/20px 20px;
     cursor: grab;
     touch-action: none;
+    user-select: none;
   }
   .package-stage:active { cursor: grabbing; }
   .package-model { position: relative; width: 160px; height: 190px; transform-style: preserve-3d; transition: transform .12s ease-out; }
-  .package-face { position: absolute; border: 1px solid hsl(var(--primary) / .45); background: linear-gradient(145deg, hsl(var(--primary) / .95), hsl(var(--primary) / .68)); box-shadow: inset -20px 0 30px hsl(0 0% 0% / .12); backface-visibility: hidden; }
-  .package-front { inset: 0 18px 0 0; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 14px; border-radius: 10px 3px 3px 10px; transform: translateZ(18px); }
-  .package-side { top: 0; right: 0; width: 36px; height: 190px; border-radius: 0 5px 5px 0; transform-origin: left center; transform: rotateY(90deg) translateX(-18px); background: linear-gradient(90deg, hsl(var(--primary) / .72), hsl(var(--primary) / .45)); }
-  .package-top { top: -18px; left: 0; width: 142px; height: 36px; border-radius: 9px 9px 3px 3px; transform-origin: center bottom; transform: rotateX(90deg) translateY(18px); background: hsl(var(--accent) / .72); }
+  .package-face { position: absolute; border: 1px solid var(--package-border); background: var(--package-front); box-shadow: inset -20px 0 30px hsl(0 0% 0% / .12); backface-visibility: hidden; }
+  .package-front { inset: 0 18px 0 0; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 14px; border-radius: 10px 3px 3px 10px; transform: translateZ(18px); overflow: hidden; }
+  .package-side { top: 0; right: 0; width: 36px; height: 190px; border-radius: 0 5px 5px 0; transform-origin: left center; transform: rotateY(90deg) translateX(-18px); background: linear-gradient(90deg, var(--package-side), color-mix(in srgb, var(--package-side) 72%, black)); }
+  .package-top { top: -18px; left: 0; width: 142px; height: 36px; border-radius: 9px 9px 3px 3px; transform-origin: center bottom; transform: rotateX(90deg) translateY(18px); background: var(--package-top); }
   .package-shadow { position: absolute; left: 8px; bottom: -30px; width: 150px; height: 28px; border-radius: 50%; background: hsl(166 40% 15% / .25); filter: blur(10px); transform: rotateX(70deg) translateZ(-22px); }
-  .package-brand { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .18em; color: hsl(var(--accent)); }
-  .package-brand span { color: hsl(var(--primary-foreground)); }
-  .package-window { height: 72px; border: 1px solid hsl(var(--primary-foreground) / .2); border-radius: 7px; background: linear-gradient(135deg, hsl(var(--accent) / .25), hsl(var(--primary-foreground) / .08)); }
-  .package-label { font-size: 10px; font-weight: 700; color: hsl(var(--primary-foreground) / .7); text-transform: uppercase; letter-spacing: .12em; }
+  .package-model--metallic .package-front { background: repeating-linear-gradient(102deg, color-mix(in srgb, var(--package-front) 82%, white), var(--package-front) 12px, color-mix(in srgb, var(--package-front) 72%, black) 18px); }
+  .package-model--paper .package-front { background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--package-front) 88%, white), var(--package-front) 3px, color-mix(in srgb, var(--package-front) 85%, black) 4px); }
+  .package-model--perforated .package-front { background: radial-gradient(circle at 6px 6px, hsl(0 0% 100% / .2) 1.2px, transparent 1.5px), var(--package-front); background-size: 12px 12px; }
+  .package-model--compostable .package-front { background: linear-gradient(145deg, color-mix(in srgb, var(--package-front) 80%, white), var(--package-front)); }
+  .package-model--clear .package-front { background: linear-gradient(145deg, color-mix(in srgb, var(--package-front) 65%, white), color-mix(in srgb, var(--package-front) 80%, transparent)); }
+  .package-model--tray { width: 190px; height: 155px; margin-top: 24px; }
+  .package-model--tray .package-front { inset: 14px 16px 0 0; border-radius: 14px 14px 7px 7px; padding: 16px 14px; }
+  .package-model--tray .package-side { top: 14px; height: 141px; }
+  .package-model--tray .package-top { top: -4px; width: 174px; height: 28px; }
+  .package-model--tray .package-shadow { bottom: -22px; width: 178px; }
+  .package-brand { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .18em; color: var(--package-top); }
+  .package-brand span { color: var(--package-ink); }
+  .package-window { display: grid; place-items: center; height: 72px; border: 1px solid var(--package-border); border-radius: 7px; background: linear-gradient(135deg, var(--package-window), hsl(0 0% 100% / .08)); color: var(--package-ink); font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: .1em; text-align: center; }
+  .package-window--opaque { background: linear-gradient(145deg, hsl(0 0% 100% / .05), hsl(0 0% 0% / .08)); }
+  .package-label { font-size: 10px; font-weight: 700; color: var(--package-ink); text-transform: uppercase; letter-spacing: .12em; }
   .package-hint { position: absolute; right: 12px; bottom: 10px; border-radius: 999px; background: hsl(var(--background) / .86); padding: 5px 8px; font-family: 'DM Mono', monospace; font-size: 9px; color: hsl(var(--muted-foreground)); }
   .reveal { animation: reveal .5s ease both; }
   .reveal-2 { animation: reveal .5s .08s ease both; }
