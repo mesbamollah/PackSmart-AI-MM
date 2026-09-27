@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://YOUR-BACKEND-URL.com/api/:path*"
+      "destination": "https://packsmart-ai-mm.onrender.com/api/:path*"
     }
   ]
 }
