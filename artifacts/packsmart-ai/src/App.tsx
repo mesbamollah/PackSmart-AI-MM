@@ -23,7 +23,7 @@ import NotFound from '@/pages/not-found';
 const queryClient = new QueryClient();
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-const clerkProxyUrl = undefined;
+const clerkProxyUrl = `${window.location.origin}/__clerk`;
 
 const navItems = [
   { href: '/dashboard', label: 'Overview', icon: BarChart3 },
