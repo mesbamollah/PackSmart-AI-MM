@@ -7,6 +7,10 @@
     {
       "source": "/__clerk/:path*",
       "destination": "https://packsmart-ai-mm.onrender.com/__clerk/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
