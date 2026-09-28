@@ -24,7 +24,7 @@ import type { RequestHandler } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const CLERK_FAPI = 'https://frontend-api.clerk.dev';
-export const CLERK_PROXY_PATH = '/api/__clerk';
+export const CLERK_PROXY_PATH = '/__clerk';
 
 /**
  * Returns the first effective public hostname for the given request,
