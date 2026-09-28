@@ -5,6 +5,10 @@
       "destination": "https://packsmart-ai-mm.onrender.com/api/:path*"
     },
     {
+      "source": "/__clerk",
+      "destination": "https://packsmart-ai-mm.onrender.com/__clerk"
+    },
+    {
       "source": "/__clerk/:path*",
       "destination": "https://packsmart-ai-mm.onrender.com/__clerk/:path*"
     },
